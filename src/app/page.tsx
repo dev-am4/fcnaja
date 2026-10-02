@@ -1,128 +1,91 @@
-import PolicyStatusBoard from '@/components/PolicyStatusBoard';
-import PolicyVisualDashboard from '@/components/PolicyVisualDashboard';
+import Link from 'next/link';
+import PolicyMiniBoard from '@/components/PolicyMiniBoard';
 import { lastVerified, policies } from '@/data/policies';
-import { getVisualStage } from '@/lib/policy-visuals';
+import { mapCoverage } from '@/data/map-points';
+import { timelineEvents } from '@/lib/policy-visuals';
 
 export default function HomePage() {
-  const categories = new Set(policies.map((policy) => policy.category)).size;
-  const withEvidence = policies.filter((policy) => policy.actionEvidence.length > 0).length;
-  const directImplementation = policies.filter((policy) =>
-    getVisualStage(policy) === 'active-measured'
-  ).length;
-
   return (
-    <main>
-      <section className="hero">
+    <main className="home-visual-first">
+      <section className="home-hero">
         <div className="container">
-          <div className="eyebrow">Bhumjaithai · Promise vs Action · 2569</div>
-          <h1>หาเสียงไว้อะไร<br />แล้วเกิดอะไรขึ้นจริง</h1>
-          <p className="hero-copy">
-            เทียบคำหาเสียงของพรรคภูมิใจไทยกับมติรัฐบาล การดำเนินงานของหน่วยงานรัฐ
-            และตัวชี้วัดทางการ โดยระบุวันที่ แหล่งที่มา และช่องว่างของหลักฐานอย่างชัดเจน
-          </p>
-
-          <div className="hero-meta">
-            <span className="pill"><span className="dot" /> ตรวจข้อมูลล่าสุด {lastVerified}</span>
-            <span className="pill">พรรคเดียว · เทียบทีละนโยบาย</span>
-            <span className="pill">ไม่ให้คะแนน · ไม่สรุปผ่าน/ตก</span>
-          </div>
-
-          <div className="stats" aria-label="ภาพรวมข้อมูล">
-            <div className="stat">
-              <strong>{policies.length}</strong>
-              <span>นโยบายจากหน้ารวมนโยบายของพรรคที่นำมาเทียบ</span>
-            </div>
-            <div className="stat">
-              <strong>{withEvidence}</strong>
-              <span>นโยบายที่มีหลักฐานฝั่งการดำเนินงานหรือมาตรการที่เกี่ยวข้องในชุดข้อมูล</span>
-            </div>
-            <div className="stat">
-              <strong>{directImplementation}</strong>
-              <span>นโยบายที่มีหลักฐานการเริ่มใช้จริงหรือมีข้อมูลวัดผลตามช่วงเวลา</span>
-            </div>
-            <div className="stat">
-              <strong>{categories}</strong>
-              <span>หมวดนโยบายสำหรับค้นหาและไล่อ่านตามประเด็น</span>
-            </div>
-          </div>
+          <div className="eyebrow">BJT Policy Tracker · 2569</div>
+          <h1>นโยบาย<br />พื้นที่<br />งบประมาณ</h1>
+          <p>ดูภาพรวมก่อน · อ่านหลักฐานเมื่อกดเข้าไป</p>
+          <div className="home-update">อัปเดต {lastVerified}</div>
         </div>
       </section>
 
-      <PolicyVisualDashboard />
+      <section className="home-gateways">
+        <div className="container gateway-grid">
+          <Link href="/policies" className="gateway-card">
+            <span>01</span>
+            <strong>{policies.length}</strong>
+            <h2>นโยบาย</h2>
+            <i>→</i>
+          </Link>
 
-      <section className="section" id="how-to-read">
-        <div className="container">
-          <div className="section-head">
-            <div>
-              <div className="eyebrow">How to read</div>
-              <h2 className="section-title">คำหาเสียงกับ “ที่ทำ” ไม่ใช่ข้อมูลชนิดเดียวกัน</h2>
-              <p className="section-copy">
-                เราแยกข้อเสนอเดิมออกจากมติ แผนงาน การเริ่มใช้จริง และตัวเลขผลลัพธ์
-                เพื่อไม่ให้การประกาศนโยบายถูกแสดงเหมือนเป็นผลสำเร็จ และไม่ใช้มาตรการที่คล้ายกันแทนนโยบายเดิมโดยอัตโนมัติ
-              </p>
-            </div>
-          </div>
+          <Link href="/map" className="gateway-card map-card">
+            <span>02</span>
+            <strong>{mapCoverage.mp.headline}</strong>
+            <h2>แผนที่พื้นที่</h2>
+            <i>→</i>
+          </Link>
 
-          <div className="compare-band">
-            <div className="compare-side">
-              <div className="compare-kicker">01 · หาเสียงไว้</div>
-              <h3>บันทึกคำประกาศและตัวเลขเดิม</h3>
-              <p>แสดงว่าพรรคเสนออะไร เป้าหมายคือใคร ตัวเลขสำคัญเท่าไร และกลไกที่ประกาศไว้คืออะไร</p>
-              <ul className="compare-list">
-                <li><span>1</span>ใช้เว็บไซต์/ข่าว/เอกสารของพรรคเป็นแหล่งคำประกาศ</li>
-                <li><span>2</span>แยกตัวเลขหาเสียงออกจากตัวเลขที่อนุมัติจริง</li>
-                <li><span>3</span>ไม่เติมรายละเอียดที่ต้นทางไม่ได้ระบุ</li>
-              </ul>
-            </div>
-
-            <div className="compare-side">
-              <div className="compare-kicker">02 · ที่ทำ / หลักฐาน</div>
-              <h3>แสดงเหตุการณ์ตามวันที่</h3>
-              <p>ใช้มติรัฐบาล หน่วยงานรัฐ และสถิติทางการเป็นหลัก แล้วบอกข้อจำกัดว่าแต่ละหลักฐานยืนยันได้แค่ไหน</p>
-              <ul className="compare-list">
-                <li><span>→</span>“บรรจุในนโยบายรัฐบาล” ไม่เท่ากับ “ดำเนินการแล้ว”</li>
-                <li><span>→</span>“เริ่มดำเนินการ” ไม่เท่ากับ “ครบตามเป้าหมาย”</li>
-                <li><span>→</span>ตัวชี้วัดรายไตรมาสไม่ใช้แทนผลทั้งปี</li>
-              </ul>
-            </div>
-          </div>
+          <Link href="/timeline" className="gateway-card">
+            <span>03</span>
+            <strong>{timelineEvents.length}</strong>
+            <h2>เหตุการณ์</h2>
+            <i>→</i>
+          </Link>
         </div>
       </section>
 
-      <section className="section" id="policies">
+      <section className="section home-map-teaser">
         <div className="container">
-          <div className="section-head">
+          <div className="home-section-head">
             <div>
-              <div className="eyebrow">All policies status board</div>
-              <h2 className="section-title">ทุกนโยบาย · เห็นสถานะจากภาพทันที</h2>
-              <p className="section-copy">
-                สี รูปทรง ไอคอน และ evidence track ช่วยแยกนโยบายที่เริ่มใช้จริง
-                กำลังดำเนินการ มีเพียงมาตรการที่เกี่ยวข้อง หรือยังไม่พบหลักฐานตรง โดยไม่ต้องอ่านย่อหน้ายาวก่อน
-              </p>
+              <span>MAP</span>
+              <h2>สส. · งบ · โครงการ</h2>
             </div>
+            <Link href="/map">เปิดแผนที่ →</Link>
           </div>
-          <PolicyStatusBoard />
+
+          <Link href="/map" className="map-teaser-card">
+            <div className="map-teaser-visual" aria-hidden="true">
+              <span className="teaser-pin pin-1">63</span>
+              <span className="teaser-pin pin-2">26</span>
+              <span className="teaser-pin budget-pin pin-3">฿</span>
+              <span className="teaser-pin project-pin pin-4">◆</span>
+              <span className="teaser-pin pin-5">31</span>
+            </div>
+
+            <div className="map-teaser-stats">
+              <div><strong>{mapCoverage.mp.headline}</strong><span>{mapCoverage.mp.label}</span></div>
+              <div><strong>{mapCoverage.budget.headline}</strong><span>{mapCoverage.budget.label}</span></div>
+              <div><strong>{mapCoverage.project.headline}</strong><span>{mapCoverage.project.label}</span></div>
+            </div>
+          </Link>
         </div>
       </section>
 
-      <section className="section">
+      <section className="section home-policy-section">
         <div className="container">
-          <div className="method">
+          <div className="home-section-head">
             <div>
-              <div className="eyebrow" style={{ color: '#8fc1a5' }}>Evidence first</div>
-              <h2 className="section-title">ตัวอย่างที่ต้องอ่านแบบละเอียด</h2>
-              <p>
-                “ค่าไฟ 3 บาท” มีผลกับบิลเดือนกันยายน 2569 แล้ว แต่ 3 บาทเป็นอัตราค่าไฟฐาน
-                ยังไม่รวมค่าบริการ ค่า Ft และ VAT ส่วน “GDP 3% พลัส” ต้องเทียบกับข้อมูลช่วงเวลาเดียวกัน
-                ไม่ควรเอา GDP ไตรมาสเดียวมาตัดสินเป้าหมายทั้งปี
-              </p>
+              <span>POLICIES</span>
+              <h2>สถานะทุกนโยบาย</h2>
             </div>
-            <div className="method-steps">
-              <div className="method-step"><strong>Promise</strong><p>คำหาเสียงและตัวเลขจากพรรค</p></div>
-              <div className="method-step"><strong>Action</strong><p>มติ แผน โครงการ หรือการเริ่มใช้จริงจากหน่วยงานรัฐ</p></div>
-              <div className="method-step"><strong>Gap</strong><p>ส่วนที่ยังไม่มีหลักฐานตรง หรือเงื่อนไขจริงต่างจากคำหาเสียง</p></div>
-            </div>
+            <Link href="/policies">ดูทั้งหมด →</Link>
           </div>
+          <PolicyMiniBoard />
+        </div>
+      </section>
+
+      <section className="section home-source-strip">
+        <div className="container source-strip">
+          <span>แหล่งข้อมูล</span>
+          <Link href="/methodology">พรรค · กกต. · รัฐบาล · หน่วยงานรัฐ · สถิติทางการ →</Link>
         </div>
       </section>
     </main>
