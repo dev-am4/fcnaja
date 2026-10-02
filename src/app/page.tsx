@@ -1,12 +1,13 @@
-import PolicyExplorer from '@/components/PolicyExplorer';
+import PolicyStatusBoard from '@/components/PolicyStatusBoard';
 import PolicyVisualDashboard from '@/components/PolicyVisualDashboard';
 import { lastVerified, policies } from '@/data/policies';
+import { getVisualStage } from '@/lib/policy-visuals';
 
 export default function HomePage() {
   const categories = new Set(policies.map((policy) => policy.category)).size;
   const withEvidence = policies.filter((policy) => policy.actionEvidence.length > 0).length;
   const directImplementation = policies.filter((policy) =>
-    ['มีผลใช้กับบิลแล้ว', 'มีโครงการและเริ่มคุ้มครองแล้ว', 'มีโครงการลงทะเบียนปี 2569'].includes(policy.actionStatus)
+    getVisualStage(policy) === 'active-measured'
   ).length;
 
   return (
@@ -37,7 +38,7 @@ export default function HomePage() {
             </div>
             <div className="stat">
               <strong>{directImplementation}</strong>
-              <span>รายการที่มีหลักฐานการเริ่มใช้มาตรการ/สิทธิจริงแบบระบุช่วงเวลาได้</span>
+              <span>นโยบายที่มีหลักฐานการเริ่มใช้จริงหรือมีข้อมูลวัดผลตามช่วงเวลา</span>
             </div>
             <div className="stat">
               <strong>{categories}</strong>
@@ -92,15 +93,15 @@ export default function HomePage() {
         <div className="container">
           <div className="section-head">
             <div>
-              <div className="eyebrow">Promise vs Action database</div>
-              <h2 className="section-title">เทียบครบทีละนโยบาย</h2>
+              <div className="eyebrow">All policies status board</div>
+              <h2 className="section-title">ทุกนโยบาย · เห็นสถานะจากภาพทันที</h2>
               <p className="section-copy">
-                การ์ดทุกใบแสดง “หาเสียงไว้” เทียบกับ “ที่ทำ/หลักฐานล่าสุด” ทันที
-                กดเข้าไปดูตัวเลข เหตุการณ์ ช่องว่าง และแหล่งอ้างอิงทั้งหมด
+                สี รูปทรง ไอคอน และ evidence track ช่วยแยกนโยบายที่เริ่มใช้จริง
+                กำลังดำเนินการ มีเพียงมาตรการที่เกี่ยวข้อง หรือยังไม่พบหลักฐานตรง โดยไม่ต้องอ่านย่อหน้ายาวก่อน
               </p>
             </div>
           </div>
-          <PolicyExplorer />
+          <PolicyStatusBoard />
         </div>
       </section>
 
