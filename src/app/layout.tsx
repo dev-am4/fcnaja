@@ -25,6 +25,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             </Link>
             <nav className="nav-links" aria-label="เมนูหลัก">
               <Link href="/#policies">นโยบาย</Link>
+              <Link href="/timeline">Timeline</Link>
               <Link href="/#how-to-read">วิธีอ่าน</Link>
               <Link href="/methodology">แหล่งข้อมูล</Link>
             </nav>
