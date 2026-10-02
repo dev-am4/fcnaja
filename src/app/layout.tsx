@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import './globals.css';
+import 'leaflet/dist/leaflet.css';
 
 export const metadata: Metadata = {
   title: {
@@ -24,21 +25,19 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               </span>
             </Link>
             <nav className="nav-links" aria-label="เมนูหลัก">
-              <Link href="/#policies">นโยบาย</Link>
+              <Link href="/policies">นโยบาย</Link>
+              <Link href="/map">แผนที่</Link>
               <Link href="/timeline">Timeline</Link>
-              <Link href="/#how-to-read">วิธีอ่าน</Link>
               <Link href="/methodology">แหล่งข้อมูล</Link>
             </nav>
           </div>
         </header>
         {children}
         <footer className="footer">
-          <div className="container footer-grid">
-            <div>
-              <strong>BJT Policy Tracker</strong>
-              <p>โครงการรวบรวมข้อมูลสาธารณะเพื่อช่วยให้ผู้อ่านเห็นคำประกาศ แหล่งข้อมูล และลำดับเหตุการณ์แยกออกจากกัน</p>
-            </div>
-            <p>ไม่ใช่เว็บไซต์ทางการของพรรคภูมิใจไทย และไม่ให้คะแนนหรือแนะนำการตัดสินใจทางการเมือง</p>
+          <div className="container footer-compact">
+            <strong>BJT Policy Tracker</strong>
+            <span>ข้อมูลสาธารณะ · ไม่ใช่เว็บไซต์ทางการของพรรค</span>
+            <Link href="/methodology">วิธีตรวจข้อมูล →</Link>
           </div>
         </footer>
       </body>
