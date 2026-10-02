@@ -5,29 +5,39 @@ export type VisualStageKey = 'no-direct' | 'policy-related' | 'in-progress' | 'a
 export type VisualStage = {
   key: VisualStageKey;
   label: string;
+  shortLabel: string;
   description: string;
+  icon: string;
 };
 
 export const visualStages: VisualStage[] = [
   {
     key: 'no-direct',
-    label: 'ยังไม่มีหลักฐานตรง',
+    label: 'ยังไม่พบหลักฐานตรง',
+    shortLabel: 'ยังไม่พบหลักฐานตรง',
     description: 'ในฐานข้อมูลปัจจุบันยังไม่มี event ทางการที่ผูกตรงกับคำหาเสียง',
+    icon: '○',
   },
   {
     key: 'policy-related',
-    label: 'บรรจุ / มีมาตรการที่เกี่ยวข้อง',
+    label: 'มีมาตรการที่เกี่ยวข้อง',
+    shortLabel: 'มาตรการเกี่ยวข้อง',
     description: 'พบการบรรจุในนโยบายรัฐบาลหรือมาตรการที่เกี่ยวข้อง แต่ยังไม่ใช่หลักฐานการใช้จริงทั้งหมด',
+    icon: '◇',
   },
   {
     key: 'in-progress',
-    label: 'กำลังขับเคลื่อน',
+    label: 'กำลังดำเนินการ',
+    shortLabel: 'กำลังดำเนินการ',
     description: 'มีการดำเนินงานหรือการเตรียมระบบจากหน่วยงานที่เกี่ยวข้อง',
+    icon: '↻',
   },
   {
     key: 'active-measured',
-    label: 'เริ่มใช้ / มีข้อมูลวัดผล',
+    label: 'มีผลใช้จริง / มีข้อมูลวัดผล',
+    shortLabel: 'มีผลใช้ / มีข้อมูลวัดผล',
     description: 'มีการเริ่มใช้สิทธิ มาตรการ หรือมีตัวชี้วัดทางการที่ระบุช่วงเวลาได้',
+    icon: '✓',
   },
 ];
 
