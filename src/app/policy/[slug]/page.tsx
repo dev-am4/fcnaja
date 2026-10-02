@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { policies } from '@/data/policies';
 import PolicyStoryVisual from '@/components/PolicyStoryVisual';
+import { getVisualStage, visualStages } from '@/lib/policy-visuals';
 
 export function generateStaticParams() {
   return policies.map((policy) => ({ slug: policy.slug }));
@@ -23,11 +24,23 @@ export default async function PolicyPage({ params }: { params: Promise<{ slug: s
 
   if (!policy) notFound();
 
+  const visualStageKey = getVisualStage(policy);
+  const visualStage = visualStages.find((item) => item.key === visualStageKey)!;
+
   return (
     <main className="detail">
       <div className="container">
         <div className="breadcrumb">
           <Link href="/">← นโยบายทั้งหมด</Link> · {policy.category}
+        </div>
+
+        <div className={`policy-detail-status tone-${visualStageKey}`}>
+          <div className="policy-detail-status-icon" aria-hidden="true">{visualStage.icon}</div>
+          <div>
+            <span>สถานะจากหลักฐานที่มี</span>
+            <strong>{visualStage.label}</strong>
+            <small>{visualStage.description}</small>
+          </div>
         </div>
 
         <div className="detail-hero">
