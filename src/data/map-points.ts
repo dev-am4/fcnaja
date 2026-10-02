@@ -52,11 +52,11 @@ export const mapPoints: MapPoint[] = [
     subtitle: 'กลุ่มตามภูมิภาค',
     lat: 16.25,
     lng: 103.15,
-    count: 63,
+    count: 62,
     year: '2569',
     accuracy: 'region',
     facts: [
-      { label: 'สส. เขต', value: '63 คน' },
+      { label: 'สส. เขต', value: '62 คน' },
       { label: 'ฐานข้อมูล', value: 'สภาผู้แทนราษฎร ชุดที่ 27' },
     ],
     note: 'ตำแหน่งหมุดเป็นจุดอ้างอิงระดับภูมิภาค ไม่ใช่สำนักงานหรือบ้านของ สส.',
@@ -129,8 +129,8 @@ export const mapPoints: MapPoint[] = [
     accuracy: 'national',
     facts: [
       { label: 'บัญชีรายชื่อ', value: '19 คน' },
-      { label: 'สส. รวมพรรค', value: '192 คน' },
-      { label: 'สส. เขต', value: '173 คน' },
+      { label: 'สส. รวมพรรค', value: '191 คน' },
+      { label: 'สส. เขต', value: '172 คน' },
     ],
     note: 'หมุดนี้ใช้กรุงเทพฯ เป็นจุดอ้างอิงเชิงข้อมูลเท่านั้น เพราะ สส. บัญชีรายชื่อไม่มีเขตเลือกตั้งเฉพาะพื้นที่',
     sourceLabel: 'HRIS รัฐสภา · สมาชิกสภาผู้แทนราษฎร ชุดที่ 27',
@@ -282,9 +282,9 @@ export const mapPoints: MapPoint[] = [
 
 export const mapCoverage = {
   mp: {
-    headline: '192',
+    headline: '191',
     label: 'สส. ภูมิใจไทย',
-    note: '173 เขต + 19 บัญชีรายชื่อ',
+    note: '172 เขต + 19 บัญชีรายชื่อ',
   },
   budget: {
     headline: '3',
