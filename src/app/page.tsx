@@ -1,4 +1,5 @@
 import PolicyExplorer from '@/components/PolicyExplorer';
+import PolicyVisualDashboard from '@/components/PolicyVisualDashboard';
 import { lastVerified, policies } from '@/data/policies';
 
 export default function HomePage() {
@@ -45,6 +46,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <PolicyVisualDashboard />
 
       <section className="section" id="how-to-read">
         <div className="container">
