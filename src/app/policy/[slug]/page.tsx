@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { policies } from '@/data/policies';
+import PolicyStoryVisual from '@/components/PolicyStoryVisual';
 
 export function generateStaticParams() {
   return policies.map((policy) => ({ slug: policy.slug }));
@@ -84,6 +85,8 @@ export default async function PolicyPage({ params }: { params: Promise<{ slug: s
             <p>{policy.actionSummary}</p>
           </div>
         </section>
+
+        <PolicyStoryVisual policy={policy} />
 
         <div className="detail-grid">
           <div>
